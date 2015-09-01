@@ -19,6 +19,9 @@ namespace ProjectRGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private Window _window;
+        private Texture2D _atlas;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,8 +36,8 @@ namespace ProjectRGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            _window = new Window();
+            LevelView.initContent();
             base.Initialize();
         }
 
@@ -46,7 +49,7 @@ namespace ProjectRGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            _atlas = Content.Load<Texture2D>("tileset");
             // TODO: use this.Content to load your game content here
         }
 
@@ -82,6 +85,15 @@ namespace ProjectRGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+
+            _window.draw(
+                spriteBatch, _atlas, 
+                GraphicsDevice.Viewport.Width,
+                GraphicsDevice.Viewport.Height);
+
+            spriteBatch.End();
 
             // TODO: Add your drawing code here
 

@@ -7,13 +7,13 @@ namespace ProjectREngine
 {
     public struct Location
     {
-        public int r;
-        public int c;
+        public int x;
+        public int y;
 
-        public Location(int r, int c)
+        public Location(int x, int y)
         {
-            this.r = r;
-            this.c = c;
+            this.x = x;
+            this.y = y;
         }
     }
 }

@@ -72,9 +72,11 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LevelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -83,6 +85,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ProjectREngine\ProjectREngine.csproj">
+      <Project>{dc399253-0d90-45a3-82ff-369ee189cb21}</Project>
+      <Name>ProjectREngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectRGameContent\ProjectRGameContent.contentproj">
       <Name>ProjectRGameContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

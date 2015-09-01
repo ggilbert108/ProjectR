@@ -50,3 +50,9 @@ Source/ProjectRGame/ProjectRGame/ProjectRGame/bin/x86/Debug/ProjectRGame.exe
 *.ico
 *.txt
 Source/ProjectRGame/ProjectRGame/ProjectRGame/obj/x86/Debug/ProjectRGame.pdb
+*.pdb
+Source/ProjectRGame/ProjectRGame/ProjectRGame/GameThumbnail.png
+Source/ProjectRGame/ProjectREngine/bin/Debug/ProjectREngine.dll
+*.dll
+*.xnb
+Source/ProjectRGame/ProjectRGame/ProjectRGame/obj/x86/Debug/ContentPipeline-{6886799E-9C4F-4AB5-9EDE-54C8C4C4F2C6}.xml
