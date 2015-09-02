@@ -5,11 +5,36 @@ using System.Text;
 
 namespace ProjectREngine
 {
-    public class Actor : Entity
+    public abstract class Actor : Entity
     {
-        public Actor(DrawTag drawTag) : base(drawTag)
-        {
+        protected Action nextAction;
 
+        protected Actor(DrawTag drawTag) : base(drawTag)
+        {
+            nextAction = null;
+        }
+
+        public Action getNextAction(ref bool actionReturned)
+        {
+            if (nextAction == null)
+            {
+                actionReturned = false;
+                return null;
+            }
+
+            actionReturned = true;
+            Action action = nextAction;
+            nextAction = null;
+            return action;
+        }
+
+        public void setNextAction(Action action)
+        {
+            if (nextAction == null)
+            {
+                action.bindActor(this);
+                nextAction = action;
+            }
         }
     }
 }

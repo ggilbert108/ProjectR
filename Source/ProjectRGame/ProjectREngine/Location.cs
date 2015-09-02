@@ -16,4 +16,9 @@ namespace ProjectREngine
             this.y = y;
         }
     }
+
+    public enum Direction
+    {
+        None, Up, Down, Left, Right
+    }
 }

@@ -25,7 +25,8 @@ namespace ProjectRGame
         {
             imagePositions = new Dictionary<DrawTag, Rectangle>()
             {
-                {DrawTag.Tile, new Rectangle(32 * 0, 32 * 13, 32, 32)},
+                {DrawTag.Tile_Ground_1, new Rectangle(32 * 0, 32 * 13, 32, 32)},
+                {DrawTag.Tile_Ground_2, new Rectangle(32 * 1, 32 * 13, 32, 32)},
                 {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)}
             };
         }

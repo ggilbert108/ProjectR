@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ProjectREngine
@@ -8,21 +10,44 @@ namespace ProjectREngine
     public class Level
     {
         private Dictionary<Location, Tile> _tiles;
-        private Dictionary<Location, Actor> _actors; 
+        private List<Actor> _actors;
+
+        private int curActor;
 
         private Hero _hero;
 
         public Level()
         {
             _tiles = new Dictionary<Location, Tile>();
-            _actors = new Dictionary<Location, Actor>();
+            _actors = new List<Actor>();
+
+            curActor = 0;
 
             //TEST CODE
             _hero = new Hero();
-            
-            addTile(new Tile(false), new Location(1, 1));
+
+            addTile(new Tile(false, TileType.Ground), new Location(1, 1));
+            addTile(new Tile(false, TileType.Ground), new Location(1, 2));
+            addTile(new Tile(false, TileType.Ground), new Location(2, 1));
+            addTile(new Tile(false, TileType.Ground), new Location(2, 2));
             addActor(_hero, new Location(0, 0));
+
             //END TEST CODE
+        }
+
+        public void update()
+        {
+            Actor actor = _actors[curActor];
+
+            bool gotAction = false;
+            Action action = actor.getNextAction(ref gotAction);
+
+            if (!gotAction)
+                return;
+
+            action.doAction();
+
+            curActor = (curActor + 1)%_actors.Count;
         }
 
         public Location getHeroLocation()
@@ -58,19 +83,29 @@ namespace ProjectREngine
 
         public Actor getActor(Location location)
         {
-            return _actors.ContainsKey(location) ? _actors[location] : null;
+            foreach (Actor actor in _actors)
+            {
+                if (actor.location.Equals(location))
+                    return actor;
+            }
+            return null;
+        }
+
+        public Hero hero
+        {
+            get { return _hero; }
         }
 
         private void addTile(Tile tile, Location location)
         {
             tile.location = location;
-            _tiles.Add(location, tile);
+            _tiles.Add(tile.location, tile);
         }
 
         private void addActor(Actor actor, Location location)
         {
             actor.location = location;
-            _actors.Add(location, actor);
+            _actors.Add( actor);
         }
     }
 }

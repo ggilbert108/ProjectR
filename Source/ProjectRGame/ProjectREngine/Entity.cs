@@ -8,10 +8,11 @@ namespace ProjectREngine
     public class Entity
     {
         private Location _location;
-        private readonly DrawTag _drawTag;
+        private  DrawTag _drawTag;
 
         public Entity(DrawTag drawTag)
         {
+            _location = new Location(0, 0);
             _drawTag = drawTag;
         }
 
@@ -24,6 +25,7 @@ namespace ProjectREngine
         public DrawTag drawTag
         {
             get { return _drawTag; }
+            set { _drawTag = value; }
         }
     }
 }

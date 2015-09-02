@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using ProjectREngine;
 
 namespace ProjectRGame
 {
@@ -37,6 +38,7 @@ namespace ProjectRGame
         protected override void Initialize()
         {
             _window = new Window();
+         
             LevelView.initContent();
             base.Initialize();
         }
@@ -69,11 +71,7 @@ namespace ProjectRGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-            // TODO: Add your update logic here
+            _window.update();
 
             base.Update(gameTime);
         }
