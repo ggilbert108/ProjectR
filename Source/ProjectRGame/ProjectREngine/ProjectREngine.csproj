@@ -42,6 +42,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="DrawTag.cs" />
+    <Compile Include="EffectDescription.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="Level.cs" />

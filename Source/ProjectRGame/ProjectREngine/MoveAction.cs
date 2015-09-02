@@ -24,6 +24,7 @@ namespace ProjectREngine
                 return false;
             }
 
+
             actor.location = newLocation;
             return true;
         }

@@ -14,6 +14,8 @@ namespace ProjectRGame
         private Level _level;
         private LevelView _levelView;
 
+        private EffectView _effectView;
+
         private InputManager _inputManager;
 
         public Window()
@@ -21,14 +23,26 @@ namespace ProjectRGame
             _level = new Level();
             _levelView = new LevelView(_level);
 
+            _effectView = new EffectView();
+
             _inputManager = new InputManager();
         }
 
         public void update(KeyboardState state)
         {
-            _level.update();
+
+            EffectDescription? effectDescription = _level.getEffect();
+            if (effectDescription != null)
+            {
+                Effect effect = EffectBuilder.buildEffect(effectDescription.Value, _level.getHeroLocation());
+                _effectView.addEffect(effect);
+            }
+            else if(_effectView.empty())
+            {
+                _level.update();
+                processInput(state);
+            }
                 
-            processInput(state);
         }
 
         private void processInput(KeyboardState state)
@@ -58,6 +72,8 @@ namespace ProjectRGame
         public void draw(SpriteBatch spriteBatch, Texture2D atlas, int screenWidth, int screenHeight)
         {
             _levelView.draw(spriteBatch, atlas, screenWidth, screenHeight);
+
+            _effectView.draw(spriteBatch, atlas, screenWidth, screenHeight);
         }
     }
 }

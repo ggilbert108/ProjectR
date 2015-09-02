@@ -16,10 +16,13 @@ namespace ProjectREngine
 
         private Hero _hero;
 
+        private LinkedList<EffectDescription> _effectQueue;
+
         public Level()
         {
             _tiles = new Dictionary<Location, Tile>();
             _actors = new List<Actor>();
+            _effectQueue = new LinkedList<EffectDescription>();
 
             curActor = 0;
 
@@ -29,7 +32,7 @@ namespace ProjectREngine
             addTile(new Tile(false, TileType.Ground), new Location(1, 1));
             addTile(new Tile(false, TileType.Ground), new Location(1, 2));
             addTile(new Tile(false, TileType.Ground), new Location(2, 1));
-            addTile(new Tile(false, TileType.Ground), new Location(2, 2));
+            addTile(new Tile(true, TileType.Ground), new Location(2, 2));
             addActor(_hero, new Location(0, 0));
 
             //END TEST CODE
@@ -51,6 +54,24 @@ namespace ProjectREngine
             curActor = (curActor + 1)%_actors.Count;
         }
 
+        public void queueEffect(EffectDescription effect)
+        {
+            _effectQueue.AddFirst(effect);
+        }
+
+        public EffectDescription? getEffect()
+        {
+            if (_effectQueue.Count == 0)
+            {
+                return null;
+            }
+
+            EffectDescription effect = _effectQueue.Last.Value;
+            _effectQueue.RemoveLast();
+
+            return effect;
+        }
+        
         public Location getHeroLocation()
         {
             return _hero.location;

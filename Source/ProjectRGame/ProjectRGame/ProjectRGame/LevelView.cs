@@ -12,9 +12,9 @@ namespace ProjectRGame
     {
         private Level _level;
 
-        private const int TILE_SIZE = 32;
+        public const int TILE_SIZE = 32;
 
-        private static Dictionary<DrawTag, Rectangle> imagePositions; 
+        public static Dictionary<DrawTag, Rectangle> imagePositions; 
 
         public LevelView(Level level)
         {
@@ -27,7 +27,10 @@ namespace ProjectRGame
             {
                 {DrawTag.Tile_Ground_1, new Rectangle(32 * 0, 32 * 13, 32, 32)},
                 {DrawTag.Tile_Ground_2, new Rectangle(32 * 1, 32 * 13, 32, 32)},
-                {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)}
+                {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)},
+                {DrawTag.Explosion_1, new Rectangle(32 * 20, 32 * 10, 32, 32)},
+                {DrawTag.Explosion_2, new Rectangle(32 * 21, 32 * 10, 32, 32)},
+                {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)}
             };
         }
 
