@@ -17,6 +17,13 @@ namespace ProjectREngine
         public override bool doAction()
         {
             Location newLocation = getLocationInDirection(_direction);
+
+            Tile tileAtLocation = level.getTile(newLocation);
+            if (tileAtLocation != null && tileAtLocation.blocksMovement)
+            {
+                return false;
+            }
+
             actor.location = newLocation;
             return true;
         }

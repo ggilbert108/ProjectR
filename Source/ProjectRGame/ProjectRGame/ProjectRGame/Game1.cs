@@ -71,7 +71,8 @@ namespace ProjectRGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            _window.update();
+            KeyboardState keyState = Keyboard.GetState();
+            _window.update(keyState);
 
             base.Update(gameTime);
         }

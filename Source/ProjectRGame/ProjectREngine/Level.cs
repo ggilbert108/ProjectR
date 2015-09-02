@@ -45,6 +45,7 @@ namespace ProjectREngine
             if (!gotAction)
                 return;
 
+            action.bindLevel(this);
             action.doAction();
 
             curActor = (curActor + 1)%_actors.Count;
