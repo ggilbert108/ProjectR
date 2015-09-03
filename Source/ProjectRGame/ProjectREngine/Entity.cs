@@ -15,6 +15,7 @@ namespace ProjectREngine
         public Entity(DrawTag drawTag, string name)
         {
             _location = new Location(0, 0);
+            this.name = name;
             _drawTag = drawTag;
         }
 

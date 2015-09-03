@@ -13,6 +13,7 @@ namespace ProjectRGame
     {
         private Level _level;
         private LevelView _levelView;
+        private Hud _hud;
 
         private EffectView _effectView;
 
@@ -22,6 +23,7 @@ namespace ProjectRGame
         {
             _level = new Level();
             _levelView = new LevelView(_level);
+            _hud = new Hud(_level.hero);
 
             _effectView = new EffectView();
 
@@ -69,11 +71,13 @@ namespace ProjectRGame
             }
         }
 
-        public void draw(SpriteBatch spriteBatch, Texture2D atlas, int screenWidth, int screenHeight)
+        public void draw(SpriteBatch spriteBatch, Texture2D atlas, SpriteFont font, int screenWidth, int screenHeight)
         {
             _levelView.draw(spriteBatch, atlas, screenWidth, screenHeight);
 
             _effectView.draw(spriteBatch, atlas, screenWidth, screenHeight);
+
+            _hud.draw(spriteBatch, font, screenWidth, screenHeight);
         }
     }
 }

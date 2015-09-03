@@ -28,14 +28,20 @@ namespace ProjectREngine
             if (actor.canOpenDoors && doorAtLocation != null && doorAtLocation.closed)
             {
                 doorAtLocation.closed = false;
+                MessageLog.log("Door opened");
+
                 return false;
             }
 
             if (actor is Hero)
             {
                 Item itemAtLocation = level.getItem(newLocation);
-                level.removeItem(newLocation);
-                ((Hero) actor).giveItem(itemAtLocation);
+                if (itemAtLocation != null)
+                {
+                    MessageLog.log(actor.name + " picked up " + itemAtLocation.name);
+                    level.removeItem(newLocation);
+                    ((Hero)actor).giveItem(itemAtLocation);
+                }
             }
 
             actor.location = newLocation;

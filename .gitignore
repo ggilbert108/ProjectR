@@ -60,3 +60,4 @@ Source/ProjectRGame/ProjectRGame/ProjectRGame/obj/x86/Debug/ContentPipeline-{688
 Source/ProjectRGame/ProjectRGame/ProjectRGame/Properties/AssemblyInfo.cs
 *.config
 Source/ProjectRGame/Packages.dgml
+*.nupkg

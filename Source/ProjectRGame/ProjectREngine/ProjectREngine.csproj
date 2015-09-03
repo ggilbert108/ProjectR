@@ -50,6 +50,7 @@
     <Compile Include="Items\StrengthPotion.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="MessageLog.cs" />
     <Compile Include="MoveAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />

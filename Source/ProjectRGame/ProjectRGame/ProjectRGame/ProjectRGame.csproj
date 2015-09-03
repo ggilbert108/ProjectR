@@ -76,6 +76,7 @@
     <Compile Include="EffectBuilder.cs" />
     <Compile Include="Effects\Explosion.cs" />
     <Compile Include="EffectView.cs" />
+    <Compile Include="Hud.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="LevelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

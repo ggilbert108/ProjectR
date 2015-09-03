@@ -22,10 +22,19 @@ namespace ProjectRGame
 
         private Window _window;
         private Texture2D _atlas;
+        private SpriteFont _font;
+
+        public static Texture2D hudBox;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
+            //graphics.IsFullScreen = true;
+
+
             Content.RootDirectory = "Content";
         }
 
@@ -52,6 +61,9 @@ namespace ProjectRGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _atlas = Content.Load<Texture2D>("tileset");
+            _font = Content.Load<SpriteFont>("font");
+
+            hudBox = Content.Load<Texture2D>("paper");
             // TODO: use this.Content to load your game content here
         }
 
@@ -72,6 +84,12 @@ namespace ProjectRGame
         protected override void Update(GameTime gameTime)
         {
             KeyboardState keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
+
             _window.update(keyState);
 
             base.Update(gameTime);
@@ -88,7 +106,7 @@ namespace ProjectRGame
             spriteBatch.Begin();
 
             _window.draw(
-                spriteBatch, _atlas, 
+                spriteBatch, _atlas, _font,
                 GraphicsDevice.Viewport.Width,
                 GraphicsDevice.Viewport.Height);
 

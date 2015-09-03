@@ -44,6 +44,10 @@ namespace ProjectREngine
             addActor(_hero, new Location(0, 0));
 
             addItem(new StrengthPotion(), new Location(1, 2));
+            addItem(new StrengthPotion(), new Location(5, 5));
+            addItem(new StrengthPotion(), new Location(5, 6));
+
+
             //END TEST CODE
         }
 

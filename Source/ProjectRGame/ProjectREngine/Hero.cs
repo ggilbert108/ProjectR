@@ -9,7 +9,7 @@ namespace ProjectREngine
     {
         private List<Item> inventory; 
 
-        public Hero() : base(DrawTag.Hero, "hero")
+        public Hero() : base(DrawTag.Hero, "Hero")
         {
             drawPriority = 0;
             canOpenDoors = true;
