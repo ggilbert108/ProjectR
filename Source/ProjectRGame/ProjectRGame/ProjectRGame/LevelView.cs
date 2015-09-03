@@ -27,12 +27,14 @@ namespace ProjectRGame
             {
                 {DrawTag.Tile_Ground_1, new Rectangle(32 * 0, 32 * 13, 32, 32)},
                 {DrawTag.Tile_Ground_2, new Rectangle(32 * 1, 32 * 13, 32, 32)},
+                {DrawTag.Stone_Wall_1, new Rectangle(32 * 22, 32 * 13, 32, 32)},
                 {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)},
                 {DrawTag.Explosion_1, new Rectangle(32 * 20, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_2, new Rectangle(32 * 21, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)},
                 {DrawTag.Door_Closed, new Rectangle(32 * 23, 32 * 11, 32, 32)},
-                {DrawTag.Door_Open, new Rectangle(32 * 27, 32 * 11, 32, 32)}
+                {DrawTag.Door_Open, new Rectangle(32 * 27, 32 * 11, 32, 32)},
+                {DrawTag.Strength_Potion, new Rectangle(32 * 0, 32 * 25, 32, 32)}
             };
         }
 

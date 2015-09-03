@@ -10,12 +10,14 @@ namespace ProjectREngine
         None,
         Tile_Ground_1,
         Tile_Ground_2,
+        Stone_Wall_1,
         Hero,
         Monster,
         Explosion_1,
         Explosion_2,
         Explosion_3,
         Door_Closed,
-        Door_Open
+        Door_Open,
+        Strength_Potion
     }
 }

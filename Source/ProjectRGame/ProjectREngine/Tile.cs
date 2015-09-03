@@ -31,13 +31,14 @@ namespace ProjectREngine
         {
             tileMap = new Dictionary<TileType, DrawTag[]>()
             {
-                {TileType.Ground, new DrawTag[2]{DrawTag.Tile_Ground_1, DrawTag.Tile_Ground_2}}
+                {TileType.Ground, new DrawTag[2]{DrawTag.Tile_Ground_1, DrawTag.Tile_Ground_2}},
+                {TileType.Stone, new DrawTag[1]{DrawTag.Stone_Wall_1}}
             };
         }
     }
 
     public enum TileType
     {
-        Water, Ground
+        Water, Ground, Stone
     }
 }

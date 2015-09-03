@@ -7,9 +7,19 @@ namespace ProjectREngine
 {
     public class Hero : Actor
     {
+        private List<Item> inventory; 
+
         public Hero() : base(DrawTag.Hero, "hero")
         {
             drawPriority = 0;
+            canOpenDoors = true;
+
+            inventory = new List<Item>();
+        }
+
+        public void giveItem(Item item)
+        {
+            inventory.Add(item);
         }
 
         public override Action getNextAction(ref ActionResult result)

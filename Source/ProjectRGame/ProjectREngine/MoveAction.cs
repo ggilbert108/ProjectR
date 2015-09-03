@@ -25,10 +25,17 @@ namespace ProjectREngine
             }
 
             Door doorAtLocation = level.getDoor(newLocation);
-            if (doorAtLocation != null && doorAtLocation.closed)
+            if (actor.canOpenDoors && doorAtLocation != null && doorAtLocation.closed)
             {
                 doorAtLocation.closed = false;
                 return false;
+            }
+
+            if (actor is Hero)
+            {
+                Item itemAtLocation = level.getItem(newLocation);
+                level.removeItem(newLocation);
+                ((Hero) actor).giveItem(itemAtLocation);
             }
 
             actor.location = newLocation;

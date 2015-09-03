@@ -9,10 +9,14 @@ namespace ProjectREngine
     {
         protected Action nextAction;
 
+        public bool canOpenDoors;
+
         protected Actor(DrawTag drawTag, string name) : base(drawTag, name)
         {
             nextAction = null;
+
             drawPriority = 1;
+            canOpenDoors = false;
         }
 
         public virtual Action getNextAction(ref ActionResult result)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Configuration;
 using System.Runtime.InteropServices;
 using System.Text;
+using ProjectREngine.Items;
 
 namespace ProjectREngine
 {
@@ -11,6 +12,7 @@ namespace ProjectREngine
     {
         private Dictionary<Location, Tile> _tiles;
         private List<Actor> _actors;
+        private Dictionary<Location, Item> _items; 
         private Dictionary<Location, Door> _doors; 
 
         private int curActor;
@@ -23,6 +25,7 @@ namespace ProjectREngine
         {
             _tiles = new Dictionary<Location, Tile>();
             _actors = new List<Actor>();
+            _items = new Dictionary<Location, Item>();
             _doors = new Dictionary<Location, Door>();
             _effectQueue = new LinkedList<EffectDescription>();
 
@@ -34,11 +37,13 @@ namespace ProjectREngine
             addTile(new Tile(false, TileType.Ground), new Location(1, 1));
             addTile(new Tile(false, TileType.Ground), new Location(1, 2));
             addTile(new Tile(false, TileType.Ground), new Location(2, 1));
-            addTile(new Tile(true, TileType.Ground), new Location(2, 2));
+            addTile(new Tile(true, TileType.Stone), new Location(2, 2));
 
             addDoor(new Door(), new Location(1, 1));
+
             addActor(_hero, new Location(0, 0));
 
+            addItem(new StrengthPotion(), new Location(1, 2));
             //END TEST CODE
         }
 
@@ -91,6 +96,7 @@ namespace ProjectREngine
             {
                 getTile(location),
                 getDoor(location),
+                getItem(location),
                 getActor(location)
             };
 
@@ -126,6 +132,19 @@ namespace ProjectREngine
             return _doors.ContainsKey(location) ? _doors[location] : null;
         }
 
+        public Item getItem(Location location)
+        {
+            return _items.ContainsKey(location) ? _items[location] : null;
+        }
+
+        public void removeItem(Location location)
+        {
+            if (_items.ContainsKey(location))
+            {
+                _items.Remove(location);
+            }
+        }
+
         public Hero hero
         {
             get { return _hero; }
@@ -135,6 +154,12 @@ namespace ProjectREngine
         {
             door.location = location;
             _doors.Add(location, door);
+        }
+
+        private void addItem(Item item, Location location)
+        {
+            item.location = location;
+            _items.Add(item.location, item);
         }
 
         private void addTile(Tile tile, Location location)
