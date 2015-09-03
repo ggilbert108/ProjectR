@@ -11,7 +11,7 @@ namespace ProjectREngine
 
         private static Dictionary<TileType, DrawTag[]> tileMap; 
 
-        public Tile(bool blocksMovement, TileType type) : base(DrawTag.Tile_Ground_1)
+        public Tile(bool blocksMovement, TileType type) : base(DrawTag.Tile_Ground_1, "")
         {
             this.blocksMovement = blocksMovement;
             setDrawTag(type);

@@ -24,6 +24,12 @@ namespace ProjectREngine
                 return false;
             }
 
+            Door doorAtLocation = level.getDoor(newLocation);
+            if (doorAtLocation != null && doorAtLocation.closed)
+            {
+                doorAtLocation.closed = false;
+                return false;
+            }
 
             actor.location = newLocation;
             return true;

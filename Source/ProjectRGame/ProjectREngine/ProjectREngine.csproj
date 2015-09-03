@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="Actor.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="DrawTag.cs" />
     <Compile Include="EffectDescription.cs" />
     <Compile Include="Entity.cs" />
@@ -51,6 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

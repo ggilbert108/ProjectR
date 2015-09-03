@@ -9,20 +9,21 @@ namespace ProjectREngine
     {
         protected Action nextAction;
 
-        protected Actor(DrawTag drawTag) : base(drawTag)
+        protected Actor(DrawTag drawTag, string name) : base(drawTag, name)
         {
             nextAction = null;
+            drawPriority = 1;
         }
 
-        public Action getNextAction(ref bool actionReturned)
+        public virtual Action getNextAction(ref ActionResult result)
         {
             if (nextAction == null)
             {
-                actionReturned = false;
+                result = ActionResult.Error;
                 return null;
             }
 
-            actionReturned = true;
+            result = ActionResult.FetchedAction;
             Action action = nextAction;
             nextAction = null;
             return action;
@@ -36,5 +37,10 @@ namespace ProjectREngine
                 nextAction = action;
             }
         }
+    }
+
+    public enum ActionResult
+    {
+        Error, Wait, FetchedAction, PlayerWait, DoNothing
     }
 }

@@ -7,6 +7,15 @@ namespace ProjectREngine
 {
     public enum DrawTag
     {
-        None, Tile_Ground_1, Tile_Ground_2, Hero, Monster, Explosion_1, Explosion_2, Explosion_3
+        None,
+        Tile_Ground_1,
+        Tile_Ground_2,
+        Hero,
+        Monster,
+        Explosion_1,
+        Explosion_2,
+        Explosion_3,
+        Door_Closed,
+        Door_Open
     }
 }

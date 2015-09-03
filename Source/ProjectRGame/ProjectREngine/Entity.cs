@@ -9,8 +9,10 @@ namespace ProjectREngine
     {
         private Location _location;
         private  DrawTag _drawTag;
+        public string name;
+        public int drawPriority;
 
-        public Entity(DrawTag drawTag)
+        public Entity(DrawTag drawTag, string name)
         {
             _location = new Location(0, 0);
             _drawTag = drawTag;

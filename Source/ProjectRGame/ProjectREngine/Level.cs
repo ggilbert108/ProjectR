@@ -11,6 +11,7 @@ namespace ProjectREngine
     {
         private Dictionary<Location, Tile> _tiles;
         private List<Actor> _actors;
+        private Dictionary<Location, Door> _doors; 
 
         private int curActor;
 
@@ -22,6 +23,7 @@ namespace ProjectREngine
         {
             _tiles = new Dictionary<Location, Tile>();
             _actors = new List<Actor>();
+            _doors = new Dictionary<Location, Door>();
             _effectQueue = new LinkedList<EffectDescription>();
 
             curActor = 0;
@@ -33,6 +35,8 @@ namespace ProjectREngine
             addTile(new Tile(false, TileType.Ground), new Location(1, 2));
             addTile(new Tile(false, TileType.Ground), new Location(2, 1));
             addTile(new Tile(true, TileType.Ground), new Location(2, 2));
+
+            addDoor(new Door(), new Location(1, 1));
             addActor(_hero, new Location(0, 0));
 
             //END TEST CODE
@@ -42,14 +46,17 @@ namespace ProjectREngine
         {
             Actor actor = _actors[curActor];
 
-            bool gotAction = false;
-            Action action = actor.getNextAction(ref gotAction);
+            ActionResult result = ActionResult.FetchedAction;
+            Action action = actor.getNextAction(ref result);
 
-            if (!gotAction)
+            if (result == ActionResult.PlayerWait || result == ActionResult.Error)
                 return;
 
-            action.bindLevel(this);
-            action.doAction();
+            if (result == ActionResult.FetchedAction)
+            {
+                action.bindLevel(this);
+                action.doAction();
+            }
 
             curActor = (curActor + 1)%_actors.Count;
         }
@@ -80,22 +87,23 @@ namespace ProjectREngine
         public List<Entity> getEntities(Location location)
         {
             //TODO add the other entites from the other layers to the list
-            List<Entity> entities = new List<Entity>()
+            Entity[] entities =
             {
                 getTile(location),
+                getDoor(location),
                 getActor(location)
             };
 
-            for (int i = 0; i < entities.Count; i++)
+            List<Entity> result = new List<Entity>();
+            foreach (Entity entity in entities)
             {
-                if (entities[i] == null)
+                if (entity != null)
                 {
-                    entities.RemoveAt(i);
-                    i--;
+                    result.Add(entity);
                 }
             }
 
-            return entities;
+            return result;
         }
 
         public Tile getTile(Location location)
@@ -113,9 +121,20 @@ namespace ProjectREngine
             return null;
         }
 
+        public Door getDoor(Location location)
+        {
+            return _doors.ContainsKey(location) ? _doors[location] : null;
+        }
+
         public Hero hero
         {
             get { return _hero; }
+        }
+
+        private void addDoor(Door door, Location location)
+        {
+            door.location = location;
+            _doors.Add(location, door);
         }
 
         private void addTile(Tile tile, Location location)

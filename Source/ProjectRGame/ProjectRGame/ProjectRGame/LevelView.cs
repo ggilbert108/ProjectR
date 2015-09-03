@@ -30,7 +30,9 @@ namespace ProjectRGame
                 {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)},
                 {DrawTag.Explosion_1, new Rectangle(32 * 20, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_2, new Rectangle(32 * 21, 32 * 10, 32, 32)},
-                {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)}
+                {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)},
+                {DrawTag.Door_Closed, new Rectangle(32 * 23, 32 * 11, 32, 32)},
+                {DrawTag.Door_Open, new Rectangle(32 * 27, 32 * 11, 32, 32)}
             };
         }
 
