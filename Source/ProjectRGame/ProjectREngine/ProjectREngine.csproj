@@ -41,8 +41,11 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="Actor.cs" />
+    <Compile Include="Actions\AttackAction.cs" />
+    <Compile Include="Chest.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="DrawTag.cs" />
+    <Compile Include="DungeonGenerator.cs" />
     <Compile Include="EffectDescription.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Hero.cs" />
@@ -52,7 +55,12 @@
     <Compile Include="Location.cs" />
     <Compile Include="MessageLog.cs" />
     <Compile Include="MoveAction.cs" />
+    <Compile Include="Actions\MoveTowardActorAction.cs" />
+    <Compile Include="Actions\OpenChestAction.cs" />
+    <Compile Include="Actions\OpenDoorAction.cs" />
+    <Compile Include="Actions\PickUpItemAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Staircase.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

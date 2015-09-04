@@ -15,15 +15,23 @@ namespace ProjectRGame
         private LevelView _levelView;
         private Hud _hud;
 
+        private Hero _hero;
+
         private EffectView _effectView;
 
         private InputManager _inputManager;
 
         public Window()
         {
-            _level = new Level();
+            _hero = new Hero();
+
+            _level = new Level(_hero);
             _levelView = new LevelView(_level);
-            _hud = new Hud(_level.hero);
+            _hud = new Hud(_hero);
+
+            DungeonGenerator.generateDungeon(_level, 100, 200);
+            _level.setHeroInLevel();
+
 
             _effectView = new EffectView();
 

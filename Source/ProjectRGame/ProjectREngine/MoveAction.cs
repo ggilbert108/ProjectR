@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ProjectREngine.Actions;
 
 namespace ProjectREngine
 {
@@ -24,13 +25,10 @@ namespace ProjectREngine
                 return false;
             }
 
-            Door doorAtLocation = level.getDoor(newLocation);
-            if (actor.canOpenDoors && doorAtLocation != null && doorAtLocation.closed)
+            Entity walkableAtLocation = level.getWalkable(newLocation);
+            if (walkableAtLocation is Door)
             {
-                doorAtLocation.closed = false;
-                MessageLog.log("Door opened");
-
-                return false;
+                alternate = new OpenDoorAction((Door)walkableAtLocation);
             }
 
             if (actor is Hero)
@@ -38,10 +36,18 @@ namespace ProjectREngine
                 Item itemAtLocation = level.getItem(newLocation);
                 if (itemAtLocation != null)
                 {
-                    MessageLog.log(actor.name + " picked up " + itemAtLocation.name);
-                    level.removeItem(newLocation);
-                    ((Hero)actor).giveItem(itemAtLocation);
+                    alternate = new PickUpItemAction(itemAtLocation);
+                    return false;
                 }
+            }
+
+            //TODO decouple actions
+
+            Actor actorAtLocation = level.getActor(newLocation);
+            if (actorAtLocation != null)
+            {
+                alternate = new MoveTowardActorAction(actorAtLocation);
+                return false;
             }
 
             actor.location = newLocation;

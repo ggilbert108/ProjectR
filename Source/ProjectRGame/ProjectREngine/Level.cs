@@ -13,7 +13,10 @@ namespace ProjectREngine
         private Dictionary<Location, Tile> _tiles;
         private List<Actor> _actors;
         private Dictionary<Location, Item> _items; 
-        private Dictionary<Location, Door> _doors; 
+        private Dictionary<Location, Entity> _walkables;
+
+        private Location _entrance;
+        private Location _exit;
 
         private int curActor;
 
@@ -21,34 +24,25 @@ namespace ProjectREngine
 
         private LinkedList<EffectDescription> _effectQueue;
 
-        public Level()
+        public Level(Hero hero)
         {
             _tiles = new Dictionary<Location, Tile>();
             _actors = new List<Actor>();
             _items = new Dictionary<Location, Item>();
-            _doors = new Dictionary<Location, Door>();
+            _walkables = new Dictionary<Location, Entity>();
             _effectQueue = new LinkedList<EffectDescription>();
 
             curActor = 0;
 
             //TEST CODE
-            _hero = new Hero();
-
-            addTile(new Tile(false, TileType.Ground), new Location(1, 1));
-            addTile(new Tile(false, TileType.Ground), new Location(1, 2));
-            addTile(new Tile(false, TileType.Ground), new Location(2, 1));
-            addTile(new Tile(true, TileType.Stone), new Location(2, 2));
-
-            addDoor(new Door(), new Location(1, 1));
-
-            addActor(_hero, new Location(0, 0));
-
-            addItem(new StrengthPotion(), new Location(1, 2));
-            addItem(new StrengthPotion(), new Location(5, 5));
-            addItem(new StrengthPotion(), new Location(5, 6));
-
-
+            _hero = hero;
+            
             //END TEST CODE
+        }
+
+        public void setHeroInLevel()
+        {
+            addActor(_hero, entrance);
         }
 
         public void update()
@@ -64,7 +58,20 @@ namespace ProjectREngine
             if (result == ActionResult.FetchedAction)
             {
                 action.bindLevel(this);
-                action.doAction();
+                
+                bool success = action.doAction();
+
+                while (!success)
+                {
+                    action = action.alternate;
+                    if (action == null)
+                    {
+                        return;
+                    }
+                    action.bindActor(actor);
+                    action.bindLevel(this);
+                    action.doAction();
+                }
             }
 
             curActor = (curActor + 1)%_actors.Count;
@@ -99,7 +106,7 @@ namespace ProjectREngine
             Entity[] entities =
             {
                 getTile(location),
-                getDoor(location),
+                getWalkable(location),
                 getItem(location),
                 getActor(location)
             };
@@ -131,9 +138,9 @@ namespace ProjectREngine
             return null;
         }
 
-        public Door getDoor(Location location)
+        public Entity getWalkable(Location location)
         {
-            return _doors.ContainsKey(location) ? _doors[location] : null;
+            return _walkables.ContainsKey(location) ? _walkables[location] : null;
         }
 
         public Item getItem(Location location)
@@ -154,28 +161,44 @@ namespace ProjectREngine
             get { return _hero; }
         }
 
-        private void addDoor(Door door, Location location)
+        public void setWalkable(Entity entity, Location location)
         {
-            door.location = location;
-            _doors.Add(location, door);
+            entity.location = location;
+            _walkables.Add(location, entity);
         }
 
-        private void addItem(Item item, Location location)
+        public void addItem(Item item, Location location)
         {
             item.location = location;
             _items.Add(item.location, item);
         }
 
-        private void addTile(Tile tile, Location location)
+        public void addTile(Tile tile, Location location)
         {
             tile.location = location;
+            if (_tiles.ContainsKey(location))
+            {
+                _tiles.Remove(location);
+            }
             _tiles.Add(tile.location, tile);
         }
 
-        private void addActor(Actor actor, Location location)
+        public void addActor(Actor actor, Location location)
         {
             actor.location = location;
             _actors.Add( actor);
+        }
+
+        public Location entrance
+        {
+            get { return _entrance; }
+            set { _entrance = value; }
+        }
+
+        public Location exit
+        {
+            get { return _exit; }
+            set { _exit = value; }
         }
     }
 }

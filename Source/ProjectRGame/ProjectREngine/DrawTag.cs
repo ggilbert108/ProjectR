@@ -10,7 +10,6 @@ namespace ProjectREngine
         None,
         Tile_Ground_1,
         Tile_Ground_2,
-        Stone_Wall_1,
         Hero,
         Monster,
         Explosion_1,
@@ -18,6 +17,18 @@ namespace ProjectREngine
         Explosion_3,
         Door_Closed,
         Door_Open,
-        Strength_Potion
+        Strength_Potion,
+        Chest_Closed,
+        Chest_Open,
+        Dungeon_Wall_1,
+        Dungeon_Wall_2,
+        Dungeon_Wall_3,
+        Dungeon_Wall_4,
+        Dungeon_Wall_5,
+        Dungeon_Wall_6,
+        Dungeon_Wall_7,
+        Dungeon_Floor_1,
+        Stair_Up,
+        Stair_Down
     }
 }

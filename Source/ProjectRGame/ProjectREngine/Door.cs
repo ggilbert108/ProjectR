@@ -21,14 +21,7 @@ namespace ProjectREngine
             set
             {
                 _closed = value;
-                if (_closed)
-                {
-                    drawTag = DrawTag.Door_Closed;
-                }
-                else
-                {
-                    drawTag = DrawTag.Door_Open;
-                }
+                drawTag = _closed ? DrawTag.Door_Closed : DrawTag.Door_Open;
             }
         }
    }

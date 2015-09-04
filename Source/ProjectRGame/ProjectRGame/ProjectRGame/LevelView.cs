@@ -27,14 +27,25 @@ namespace ProjectRGame
             {
                 {DrawTag.Tile_Ground_1, new Rectangle(32 * 0, 32 * 13, 32, 32)},
                 {DrawTag.Tile_Ground_2, new Rectangle(32 * 1, 32 * 13, 32, 32)},
-                {DrawTag.Stone_Wall_1, new Rectangle(32 * 22, 32 * 13, 32, 32)},
                 {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)},
                 {DrawTag.Explosion_1, new Rectangle(32 * 20, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_2, new Rectangle(32 * 21, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)},
                 {DrawTag.Door_Closed, new Rectangle(32 * 23, 32 * 11, 32, 32)},
                 {DrawTag.Door_Open, new Rectangle(32 * 27, 32 * 11, 32, 32)},
-                {DrawTag.Strength_Potion, new Rectangle(32 * 0, 32 * 25, 32, 32)}
+                {DrawTag.Strength_Potion, new Rectangle(32 * 0, 32 * 25, 32, 32)},
+                {DrawTag.Chest_Closed, new Rectangle(32 * 44, 32 * 45, 32, 32)},
+                {DrawTag.Chest_Open, new Rectangle(32 * 45, 32 * 45, 32, 32)},
+                {DrawTag.Dungeon_Wall_1, new Rectangle(32 * 16, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_2, new Rectangle(32 * 17, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_3, new Rectangle(32 * 18, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_4, new Rectangle(32 * 19, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_5, new Rectangle(32 * 20, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_6, new Rectangle(32 * 21, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Wall_7, new Rectangle(32 * 22, 32 * 16, 32, 32)},
+                {DrawTag.Dungeon_Floor_1, new Rectangle(32 * 41, 32 * 12, 32, 32)},
+                {DrawTag.Stair_Up, new Rectangle(32 * 5, 32 * 45, 32, 32)},
+                {DrawTag.Stair_Down, new Rectangle(32 * 4, 32 * 45, 32, 32)},
             };
         }
 

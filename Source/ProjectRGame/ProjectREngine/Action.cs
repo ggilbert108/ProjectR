@@ -10,9 +10,13 @@ namespace ProjectREngine
         protected Actor actor;
         protected Level level;
 
+        public Action alternate;
+
         public void bindActor(Actor actor)
         {
             this.actor = actor;
+
+            alternate = null;
         }
 
         public void bindLevel(Level level)
