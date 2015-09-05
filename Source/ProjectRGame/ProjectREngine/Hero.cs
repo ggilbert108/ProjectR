@@ -7,12 +7,18 @@ namespace ProjectREngine
 {
     public class Hero : Actor
     {
-        private List<Item> inventory; 
+        private List<Item> inventory;
+
+        public const int MAX_SIGHT_DISTANCE = 8;
+
+        public bool justMoved;
 
         public Hero() : base(DrawTag.Hero, "Hero")
         {
             drawPriority = 0;
             canOpenDoors = true;
+
+            justMoved = false;
 
             inventory = new List<Item>();
         }
@@ -32,6 +38,16 @@ namespace ProjectREngine
             else
             {
                 return base.getNextAction(ref result);
+            }
+        }
+
+        public override Location location
+        {
+            get { return _location; }
+            set
+            {
+                _location = value;
+                justMoved = true;
             }
         }
     }

@@ -24,6 +24,7 @@ namespace ProjectRGame
         private Texture2D _atlas;
         private SpriteFont _font;
 
+        public static Texture2D alphaOverlay;
         public static Texture2D hudBox;
 
         public Game1()
@@ -63,6 +64,7 @@ namespace ProjectRGame
             _atlas = Content.Load<Texture2D>("tileset");
             _font = Content.Load<SpriteFont>("font");
 
+            alphaOverlay = Content.Load<Texture2D>("blacksquare");
             hudBox = Content.Load<Texture2D>("paper");
             // TODO: use this.Content to load your game content here
         }
@@ -101,7 +103,7 @@ namespace ProjectRGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
 

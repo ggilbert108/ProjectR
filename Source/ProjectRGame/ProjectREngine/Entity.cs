@@ -7,19 +7,23 @@ namespace ProjectREngine
 {
     public class Entity
     {
-        private Location _location;
+        protected Location _location;
         private  DrawTag _drawTag;
         public string name;
         public int drawPriority;
+
+        public int lit;
 
         public Entity(DrawTag drawTag, string name)
         {
             _location = new Location(0, 0);
             this.name = name;
             _drawTag = drawTag;
+
+            lit = 255;
         }
 
-        public Location location
+        public virtual Location location
         {
             get { return _location; }
             set { _location = value; }

@@ -20,6 +20,7 @@ namespace ProjectREngine.Actions
             {
                 _door.closed = false;
                 MessageLog.log("Door opened");
+                level.updatePlayerVision();
             }
             else
             {

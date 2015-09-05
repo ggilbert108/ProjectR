@@ -73,6 +73,7 @@ namespace ProjectRGame
                     foreach (Entity entity in entities)
                     {
                         drawEntity(spriteBatch, atlas, entity, offset);
+
                     }
                 }
             }
@@ -84,6 +85,11 @@ namespace ProjectRGame
             Rectangle dest = new Rectangle(screenLocation.x * TILE_SIZE, screenLocation.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
             spriteBatch.Draw(atlas, dest, source, Color.White);
+
+            int alpha = entity.lit;
+            Color color = new Color(0, 0, 0, alpha);
+
+            spriteBatch.Draw(Game1.alphaOverlay, dest, color);
         }
     }
 }

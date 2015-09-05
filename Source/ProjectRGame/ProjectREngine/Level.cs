@@ -17,6 +17,7 @@ namespace ProjectREngine
 
         private Location _entrance;
         private Location _exit;
+        private Rect _bounds;
 
         private int curActor;
 
@@ -43,6 +44,8 @@ namespace ProjectREngine
         public void setHeroInLevel()
         {
             addActor(_hero, entrance);
+
+            updatePlayerVision();
         }
 
         public void update()
@@ -70,11 +73,17 @@ namespace ProjectREngine
                     }
                     action.bindActor(actor);
                     action.bindLevel(this);
-                    action.doAction();
+                    success = action.doAction();
                 }
             }
 
             curActor = (curActor + 1)%_actors.Count;
+
+            if (hero.justMoved)
+            {
+                hero.justMoved = false;
+                updatePlayerVision();
+            }
         }
 
         public void queueEffect(EffectDescription effect)
@@ -161,9 +170,66 @@ namespace ProjectREngine
             get { return _hero; }
         }
 
-        public void setWalkable(Entity entity, Location location)
+        public bool blocksSight(Location location)
+        {
+            Tile tile = getTile(location);
+            Entity walkable = getWalkable(location);
+
+            if (tile != null && tile.blocksMovement)
+                return true;
+            if (walkable != null)
+            {
+                if (walkable is Door && ((Door) walkable).closed)
+                    return true;
+                if (walkable is Chest)
+                    return true;
+            }
+                
+
+            return false;
+        }
+
+        private void resetLit()
+        {
+            for (int x = bounds.x1; x <= bounds.x2; x++)
+            {
+                for (int y = bounds.y1; y <= bounds.y2; y++)
+                {
+                    setLit(new Location(x, y), 126);
+                }
+            }
+        }
+
+        public void setLit(Location location, int lit)
+        {
+            //if (lit == 0)
+            //{
+            //    double distance = location.distance(_hero.location);
+            //    double ratio = distance/Hero.MAX_SIGHT_DISTANCE;
+            //    Console.WriteLine(ratio);
+            //    lit += (int) (255 * ratio);
+            //}
+
+            List<Entity> entities = getEntities(location);
+            foreach (Entity entity in entities)
+            {
+                entity.lit = lit;
+            }
+        }
+
+        public void updatePlayerVision()
+        {
+            resetLit();
+            FOVCalculator.calculateFOV(this);
+        }
+
+        public void addWalkable(Entity entity, Location location)
         {
             entity.location = location;
+            if (_walkables.ContainsKey(location))
+            {
+                _walkables.Remove(location);
+            }
             _walkables.Add(location, entity);
         }
 
@@ -199,6 +265,12 @@ namespace ProjectREngine
         {
             get { return _exit; }
             set { _exit = value; }
+        }
+
+        public Rect bounds
+        {
+            get { return _bounds; }
+            set { _bounds = value; }
         }
     }
 }

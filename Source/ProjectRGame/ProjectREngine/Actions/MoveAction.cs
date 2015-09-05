@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using ProjectREngine.Actions;
 
-namespace ProjectREngine
+namespace ProjectREngine.Actions
 {
     public class MoveAction : Action
     {
@@ -29,6 +30,7 @@ namespace ProjectREngine
             if (walkableAtLocation is Door)
             {
                 alternate = new OpenDoorAction((Door)walkableAtLocation);
+                return false;
             }
 
             if (actor is Hero)
@@ -51,6 +53,7 @@ namespace ProjectREngine
             }
 
             actor.location = newLocation;
+
             return true;
         }
 

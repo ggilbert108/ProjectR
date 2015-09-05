@@ -61,3 +61,4 @@ Source/ProjectRGame/ProjectRGame/ProjectRGame/Properties/AssemblyInfo.cs
 *.config
 Source/ProjectRGame/Packages.dgml
 *.nupkg
+Source/ProjectRGame/ProjectRUI/Properties/AssemblyInfo.cs

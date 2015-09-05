@@ -48,13 +48,14 @@
     <Compile Include="DungeonGenerator.cs" />
     <Compile Include="EffectDescription.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="FOVCalculator.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Items\StrengthPotion.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="MessageLog.cs" />
-    <Compile Include="MoveAction.cs" />
+    <Compile Include="Actions\MoveAction.cs" />
     <Compile Include="Actions\MoveTowardActorAction.cs" />
     <Compile Include="Actions\OpenChestAction.cs" />
     <Compile Include="Actions\OpenDoorAction.cs" />
