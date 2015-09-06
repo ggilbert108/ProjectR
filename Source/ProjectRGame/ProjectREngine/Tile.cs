@@ -15,6 +15,7 @@ namespace ProjectREngine
         {
             this.blocksMovement = blocksMovement;
             setDrawTag(type);
+            discovered = true;
         }
 
         private void setDrawTag(TileType type)

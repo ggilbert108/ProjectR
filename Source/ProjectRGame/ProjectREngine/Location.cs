@@ -20,14 +20,22 @@ namespace ProjectREngine
         {
             switch (direction)
             {
-                case Direction.Up:
+                case Direction.North:
                     return new Location(x, y - 1);
-                case Direction.Down:
+                case Direction.South:
                     return new Location(x, y + 1);
-                case Direction.Left:
+                case Direction.West:
                     return new Location(x - 1, y);
-                case Direction.Right:
+                case Direction.East:
                     return new Location(x + 1, y);
+                case Direction.NorthWest:
+                    return new Location(x - 1, y - 1);
+                case Direction.SouthWest:
+                    return new Location(x - 1, y + 1);
+                case Direction.NorthEast:
+                    return new Location(x + 1, y - 1);
+                case Direction.SouthEast:
+                    return new Location(x + 1, y + 1);
                 default:
                     return this;
             }
@@ -44,6 +52,6 @@ namespace ProjectREngine
 
     public enum Direction
     {
-        None, Up, Down, Left, Right
+        None, North, South, West, East, NorthWest, SouthWest, NorthEast, SouthEast
     }
 }

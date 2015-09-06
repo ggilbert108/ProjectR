@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -20,7 +23,7 @@ namespace ProjectRGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private Window _window;
+        private volatile Window _window;
         private Texture2D _atlas;
         private SpriteFont _font;
 
@@ -35,6 +38,8 @@ namespace ProjectRGame
             //graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
 
+            graphics.SynchronizeWithVerticalRetrace = true;
+
 
             Content.RootDirectory = "Content";
         }
@@ -48,6 +53,7 @@ namespace ProjectRGame
         protected override void Initialize()
         {
             _window = new Window();
+
          
             LevelView.initContent();
             base.Initialize();
@@ -92,7 +98,10 @@ namespace ProjectRGame
                 Exit();
             }
 
-            _window.update(keyState);
+            while (!_window.update(keyState))
+            {
+
+            }            
 
             base.Update(gameTime);
         }
@@ -104,7 +113,6 @@ namespace ProjectRGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
             spriteBatch.Begin();
 
             _window.draw(
@@ -115,7 +123,6 @@ namespace ProjectRGame
             spriteBatch.End();
 
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }

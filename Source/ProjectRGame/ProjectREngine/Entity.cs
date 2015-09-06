@@ -10,9 +10,14 @@ namespace ProjectREngine
         protected Location _location;
         private  DrawTag _drawTag;
         public string name;
-        public int drawPriority;
 
-        public int lit;
+        private int _lit;
+        public bool discovered;
+
+        public const int LIT_DIM = 126;
+        public const int LIT_FULL = 0;
+        public const int LIT_DARK = 230;
+        public const int LIT_FULL_DARK = 240;
 
         public Entity(DrawTag drawTag, string name)
         {
@@ -20,7 +25,8 @@ namespace ProjectREngine
             this.name = name;
             _drawTag = drawTag;
 
-            lit = 255;
+            discovered = false;
+            lit = LIT_DIM;
         }
 
         public virtual Location location
@@ -33,6 +39,19 @@ namespace ProjectREngine
         {
             get { return _drawTag; }
             set { _drawTag = value; }
+        }
+
+        public int lit
+        {
+            get { return _lit; }
+            set
+            {
+                _lit = value;
+                if (_lit == LIT_FULL)
+                {
+                    discovered = true;
+                }
+            }
         }
     }
 }

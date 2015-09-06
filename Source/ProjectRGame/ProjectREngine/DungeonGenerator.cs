@@ -17,7 +17,7 @@ namespace ProjectREngine
             carveRoom(level, dungeonRect, true, TileType.Dungeon_Wall);
 
             Location center = new Location(width / 2, height / 2);
-            Rect innerRoom = createRect(center, Direction.Left, Feature.Room);
+            Rect innerRoom = createRect(center, Direction.West, Feature.Room);
             carveRoom(level, innerRoom, false, TileType.Dungeon_Floor);
 
             for (int i = 0; i < 100; i++)
@@ -31,11 +31,13 @@ namespace ProjectREngine
                 tryAddFeature(level, doorLoc, feature);
             }
             addEntranceAndExit(level, dungeonRect);
+            addChests(level, dungeonRect);
+            initLighting(level, dungeonRect);
         }
 
         private static void tryAddFeature(Level level, Location doorLoc, Feature feature)
         {
-            Direction[] directions = { Direction.Up, Direction.Down, Direction.Left, Direction.Right };
+            Direction[] directions = { Direction.North, Direction.South, Direction.West, Direction.East };
 
             foreach (Direction direction in directions)
             {
@@ -114,7 +116,7 @@ namespace ProjectREngine
 
             if (feature == Feature.Corridor)
             {
-                if (side == Direction.Left || side == Direction.Right)
+                if (side == Direction.West || side == Direction.East)
                 {
                     height = 2;
                     width *= 3;
@@ -130,25 +132,25 @@ namespace ProjectREngine
 
             switch (side)
             {
-                case Direction.Down:
+                case Direction.South:
                     y1 = doorLoc.y + 1;
                     x1 = doorLoc.x - (width/2);
                     y2 = y1 + height;
                     x2 = x1 + width;
                     break;
-                case Direction.Up:
+                case Direction.North:
                     y2 = doorLoc.y - 1;
                     x2 = doorLoc.x + (width/2);
                     x1 = x2 - width;
                     y1 = y2 - height;
                     break;
-                case Direction.Left:
+                case Direction.West:
                     x2 = doorLoc.x - 1;
                     y1 = doorLoc.y - (height/2);
                     x1 = x2 - width;
                     y2 = y1 + height;
                     break;
-                case Direction.Right:
+                case Direction.East:
                     x1 = doorLoc.x + 1;
                     y1 = doorLoc.y - (height/2);
                     x2 = x1 + width;
@@ -178,6 +180,25 @@ namespace ProjectREngine
             level.entrance = entrance;
         }
 
+        private static void addChests(Level level, Rect bounds)
+        {
+            const int numChests = 20;
+            for (int i = 0; i < numChests; i++)
+            {
+                Location chestLoc = new Location(0, 0);
+
+                while (level.getTile(chestLoc).blocksMovement)
+                {
+                    chestLoc.x = Util.random.Next(bounds.x1, bounds.x2);
+                    chestLoc.y = Util.random.Next(bounds.y1, bounds.y2);
+                }
+
+                Chest chest = new Chest();
+                level.addWalkable(chest, chestLoc);
+
+            }
+        }
+
         private static bool isDoorCandidate(Level level, Location location)
         {
             if (!level.getTile(location).blocksMovement)
@@ -185,10 +206,10 @@ namespace ProjectREngine
 
             Location[] neighbors =
             {
-                location.getAdjLocation(Direction.Up),
-                location.getAdjLocation(Direction.Down),
-                location.getAdjLocation(Direction.Left),
-                location.getAdjLocation(Direction.Right)
+                location.getAdjLocation(Direction.North),
+                location.getAdjLocation(Direction.South),
+                location.getAdjLocation(Direction.West),
+                location.getAdjLocation(Direction.East)
             };
 
             for (int i = 0; i < 4; i++)
@@ -198,6 +219,51 @@ namespace ProjectREngine
                     return true;
             }
             return false;
+        }
+
+        private static void initLighting(Level level,  Rect bounds)
+        {
+            for (int x = bounds.x1; x <= bounds.x2; x++)
+            {
+                for (int y = bounds.y1; y <= bounds.y2; y++)
+                {
+                    if (isDark(level, new Location(x, y)))
+                    {
+                        level.setLit(new Location(x, y), Entity.LIT_FULL_DARK);
+                    }
+                }
+            }
+        }
+
+        private static bool isDark(Level level, Location location)
+        {
+            if (level.getTile(location) == null || !level.getTile(location).blocksMovement)
+                return false;
+
+            Location[] neighbors =
+            {
+                location.getAdjLocation(Direction.North),
+                location.getAdjLocation(Direction.South),
+                location.getAdjLocation(Direction.West),
+                location.getAdjLocation(Direction.East),
+                location.getAdjLocation(Direction.NorthWest),
+                location.getAdjLocation(Direction.SouthWest),
+                location.getAdjLocation(Direction.NorthEast),
+                location.getAdjLocation(Direction.SouthEast),
+            };
+
+            int countBlockedNeighbors = 0;
+
+            for (int i = 0; i < neighbors.Length; i++)
+            {
+                Tile tile = level.getTile(neighbors[i]);
+                if (tile == null || tile.blocksMovement)
+                {
+                    countBlockedNeighbors++;
+                }
+            }
+
+            return countBlockedNeighbors == 8;
         }
     }
 

@@ -16,12 +16,23 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
+            Console.WriteLine("opening chest");
             if (_chest.closed)
             {
                 _chest.closed = false;
-                Item chestItem = _chest.takeItem();
-                ((Hero) actor).giveItem(chestItem);
-                MessageLog.log(actor.name + " opened a chest and recieved " + chestItem.name);
+                if (_chest.isTrapped)
+                {
+                    EffectDescription description = new EffectDescription(EffectType.Explosion, actor.location);
+                    level.queueEffect(description);
+
+                    MessageLog.log("The chest was trapped!");
+                }
+                else
+                {
+                    Item chestItem = _chest.takeItem();
+                    ((Hero) actor).giveItem(chestItem);
+                    MessageLog.log(actor.name + " opened a chest and recieved " + chestItem.name);
+                }
             }
             return true;
         }

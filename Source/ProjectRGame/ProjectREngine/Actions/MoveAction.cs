@@ -32,6 +32,11 @@ namespace ProjectREngine.Actions
                 alternate = new OpenDoorAction((Door)walkableAtLocation);
                 return false;
             }
+            if (walkableAtLocation is Chest)
+            {
+                alternate = new OpenChestAction((Chest)walkableAtLocation);
+                return false;
+            }
 
             if (actor is Hero)
             {
@@ -63,16 +68,16 @@ namespace ProjectREngine.Actions
 
             switch (direction)
             {
-                case Direction.Up:
+                case Direction.North:
                     location.y--;
                     break;
-                case Direction.Down:
+                case Direction.South:
                     location.y++;
                     break;
-                case Direction.Left:
+                case Direction.West:
                     location.x--;
                     break;
-                case Direction.Right:
+                case Direction.East:
                     location.x++;
                     break;
             }

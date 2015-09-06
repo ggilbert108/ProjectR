@@ -16,17 +16,8 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
-            if (actor is Hero && _toward is Chest)
-            {
-                alternate = new OpenChestAction((Chest)_toward);
-                return false;
-            }
-            else if (!(_toward is Chest))
-            {
-                alternate = new AttackAction(_toward);
-                return false;
-            }
-            return true;
+            alternate = new AttackAction(_toward);
+            return false;
         }
     }
 }

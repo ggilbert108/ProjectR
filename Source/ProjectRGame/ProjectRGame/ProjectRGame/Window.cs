@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace ProjectRGame
 {
     public class Window
     {
-        private Level _level;
+        private volatile Level _level;
         private LevelView _levelView;
         private Hud _hud;
 
@@ -30,30 +31,38 @@ namespace ProjectRGame
             _levelView = new LevelView(_level);
             _hud = new Hud(_hero);
 
-            DungeonGenerator.generateDungeon(_level, 100, 200);
+            DungeonGenerator.generateDungeon(_level, 200, 200);
             _level.setHeroInLevel();
-
 
             _effectView = new EffectView();
 
             _inputManager = new InputManager();
         }
 
-        public void update(KeyboardState state)
+        /// <summary>
+        /// Updates the game engine and processes any effects
+        /// </summary>
+        /// <param name="keyState"></param>
+        /// <returns>Returns true if the game should cease it's update loop</returns>
+        public bool update(KeyboardState keyState)
         {
-
             EffectDescription? effectDescription = _level.getEffect();
             if (effectDescription != null)
             {
                 Effect effect = EffectBuilder.buildEffect(effectDescription.Value, _level.getHeroLocation());
                 _effectView.addEffect(effect);
+                return true;
             }
-            else if(_effectView.empty())
+
+            if (_effectView.empty())
             {
-                _level.update();
-                processInput(state);
+                processInput(keyState);
+                return _level.update();
             }
-                
+            else
+            {
+                return true;
+            }
         }
 
         private void processInput(KeyboardState state)
@@ -64,19 +73,19 @@ namespace ProjectRGame
 
             if (_inputManager.keyTyped(Keys.Up))
             {
-                hero.setNextAction(new MoveAction(Direction.Up));
+                hero.setNextAction(new MoveAction(Direction.North));
             }
             else if (_inputManager.keyTyped(Keys.Down))
             {
-                hero.setNextAction(new MoveAction(Direction.Down));
+                hero.setNextAction(new MoveAction(Direction.South));
             }
             else if (_inputManager.keyTyped(Keys.Left))
             {
-                hero.setNextAction(new MoveAction(Direction.Left));
+                hero.setNextAction(new MoveAction(Direction.West));
             }
             else if (_inputManager.keyTyped(Keys.Right))
             {
-                hero.setNextAction(new MoveAction(Direction.Right));
+                hero.setNextAction(new MoveAction(Direction.East));
             }
         }
 

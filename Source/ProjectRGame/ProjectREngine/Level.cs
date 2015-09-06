@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Configuration;
 using System.Runtime.InteropServices;
@@ -15,6 +16,7 @@ namespace ProjectREngine
         private Dictionary<Location, Item> _items; 
         private Dictionary<Location, Entity> _walkables;
 
+        private HashSet<Location> _actorLocations; 
         private Location _entrance;
         private Location _exit;
         private Rect _bounds;
@@ -33,6 +35,8 @@ namespace ProjectREngine
             _walkables = new Dictionary<Location, Entity>();
             _effectQueue = new LinkedList<EffectDescription>();
 
+            _actorLocations = new HashSet<Location>();
+
             curActor = 0;
 
             //TEST CODE
@@ -44,24 +48,31 @@ namespace ProjectREngine
         public void setHeroInLevel()
         {
             addActor(_hero, entrance);
-
             updatePlayerVision();
         }
 
-        public void update()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Returns false if the player did not make a move</returns>
+        public bool update()
         {
             Actor actor = _actors[curActor];
 
             ActionResult result = ActionResult.FetchedAction;
             Action action = actor.getNextAction(ref result);
 
-            if (result == ActionResult.PlayerWait || result == ActionResult.Error)
-                return;
+            if (result == ActionResult.DoNothing)
+            {
+                curActor = (curActor + 1)%_actors.Count;
+                return false;
+            }
 
             if (result == ActionResult.FetchedAction)
             {
                 action.bindLevel(this);
-                
+
+
                 bool success = action.doAction();
 
                 while (!success)
@@ -69,7 +80,7 @@ namespace ProjectREngine
                     action = action.alternate;
                     if (action == null)
                     {
-                        return;
+                        return false;
                     }
                     action.bindActor(actor);
                     action.bindLevel(this);
@@ -84,6 +95,8 @@ namespace ProjectREngine
                 hero.justMoved = false;
                 updatePlayerVision();
             }
+
+            return result == ActionResult.PlayerWait;
         }
 
         public void queueEffect(EffectDescription effect)
@@ -191,10 +204,14 @@ namespace ProjectREngine
 
         private void resetLit()
         {
-            for (int x = bounds.x1; x <= bounds.x2; x++)
+            for (int x = hero.visibleRect.x1; x <= hero.visibleRect.x2; x++)
             {
-                for (int y = bounds.y1; y <= bounds.y2; y++)
+                for (int y = hero.visibleRect.y1; y <= hero.visibleRect.y2; y++)
                 {
+                    if (getLit(new Location(x, y)) == Entity.LIT_FULL_DARK)
+                    {
+                        continue;
+                    }
                     setLit(new Location(x, y), 126);
                 }
             }
@@ -202,19 +219,19 @@ namespace ProjectREngine
 
         public void setLit(Location location, int lit)
         {
-            //if (lit == 0)
-            //{
-            //    double distance = location.distance(_hero.location);
-            //    double ratio = distance/Hero.MAX_SIGHT_DISTANCE;
-            //    Console.WriteLine(ratio);
-            //    lit += (int) (255 * ratio);
-            //}
-
             List<Entity> entities = getEntities(location);
             foreach (Entity entity in entities)
             {
                 entity.lit = lit;
             }
+        }
+
+        private int getLit(Location location)
+        {
+            Tile tile = getTile(location);
+            if (tile == null) return -1;
+
+            return tile.lit;
         }
 
         public void updatePlayerVision()

@@ -15,7 +15,6 @@ namespace ProjectREngine
         {
             nextAction = null;
 
-            drawPriority = 1;
             canOpenDoors = false;
         }
 

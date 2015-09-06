@@ -12,7 +12,7 @@ namespace ProjectREngine
         public Door() : base(DrawTag.Door_Closed, "Door")
         {
             _closed = true;
-            drawPriority = 2;
+            discovered = true;
         }
 
         public bool closed

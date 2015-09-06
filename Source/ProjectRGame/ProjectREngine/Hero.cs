@@ -11,16 +11,19 @@ namespace ProjectREngine
 
         public const int MAX_SIGHT_DISTANCE = 8;
 
+        public Rect visibleRect;
+
         public bool justMoved;
 
         public Hero() : base(DrawTag.Hero, "Hero")
         {
-            drawPriority = 0;
             canOpenDoors = true;
 
             justMoved = false;
 
             inventory = new List<Item>();
+
+            visibleRect = new Rect(0, 0, 0, 0);
         }
 
         public void giveItem(Item item)

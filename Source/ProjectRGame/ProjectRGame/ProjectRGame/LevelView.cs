@@ -61,6 +61,11 @@ namespace ProjectRGame
             int y1 = heroLocation.y - (screenVertTiles / 2);
             int y2 = heroLocation.y + (screenVertTiles / 2);
 
+            bool redraw = _level.hero.visibleRect.Equals(new Rect(0, 0, 0, 0));
+
+            _level.hero.visibleRect = new Rect(x1, y1, x2, y2);
+            _level.hero.visibleRect.expand();
+
             for (int x = x1; x <= x2; x++)
             {
                 for (int y = y1; y <= y2; y++)
@@ -73,14 +78,22 @@ namespace ProjectRGame
                     foreach (Entity entity in entities)
                     {
                         drawEntity(spriteBatch, atlas, entity, offset);
-
                     }
                 }
+            }
+
+            if (redraw)
+            {
+                _level.updatePlayerVision();
+                draw(spriteBatch, atlas, screenWidth, screenHeight);
             }
         }
 
         private void drawEntity(SpriteBatch spriteBatch, Texture2D atlas, Entity entity, Location screenLocation)
         {
+            if (!entity.discovered) return;
+
+
             Rectangle source = imagePositions[entity.drawTag];
             Rectangle dest = new Rectangle(screenLocation.x * TILE_SIZE, screenLocation.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
