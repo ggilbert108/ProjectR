@@ -62,3 +62,12 @@ Source/ProjectRGame/ProjectRGame/ProjectRGame/Properties/AssemblyInfo.cs
 Source/ProjectRGame/Packages.dgml
 *.nupkg
 Source/ProjectRGame/ProjectRUI/Properties/AssemblyInfo.cs
+*.psess
+Source/ProjectRGame/ProjectRGame/ProjectRGame/bin/x86/Debug/app.publish/Application Files/ProjectRGame_1_0_0_0/Content/blacksquare.xnb.deploy
+*.deploy
+Source/ProjectRGame/ProjectRGame/ProjectRGame/bin/x86/Debug/app.publish/Application Files/ProjectRGame_1_0_0_0/ProjectRGame.exe.manifest
+*.manifest
+Source/ProjectRGame/ProjectRGame/ProjectRGame/ProjectRGame_TemporaryKey.pfx
+*.vsp
+Source/ProjectRGame/ProjectRGame/ProjectRGame/obj/x86/Debug/ProjectRGame.application
+*.application

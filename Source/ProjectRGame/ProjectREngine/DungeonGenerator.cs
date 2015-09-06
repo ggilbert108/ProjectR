@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using ProjectREngine.Monsters;
 
 namespace ProjectREngine
 {
@@ -32,6 +33,7 @@ namespace ProjectREngine
             }
             addEntranceAndExit(level, dungeonRect);
             addChests(level, dungeonRect);
+            addMonsters(level, dungeonRect);
             initLighting(level, dungeonRect);
         }
 
@@ -197,6 +199,32 @@ namespace ProjectREngine
                 level.addWalkable(chest, chestLoc);
 
             }
+        }
+
+        private static void addMonsters(Level level, Rect bounds)
+        {
+            const int numMonsters = 20;
+
+            for (int i = 0; i < numMonsters; i++)
+            {
+                Location monsterLocation = new Location(0, 0);
+
+                while (!isMonsterCandidate(level, monsterLocation))
+                {
+                    monsterLocation.x = Util.random.Next(bounds.x1, bounds.x2);
+                    monsterLocation.y = Util.random.Next(bounds.y1, bounds.y2);
+                }
+
+                Monster monster = new Skeleton();
+                level.addActor(monster, monsterLocation);
+            }
+        }
+
+        private static bool isMonsterCandidate(Level level, Location location)
+        {
+            if (level.getEntities(location).Count > 1)
+                return false;
+            return !level.getTile(location).blocksMovement;
         }
 
         private static bool isDoorCandidate(Level level, Location location)

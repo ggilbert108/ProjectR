@@ -11,11 +11,16 @@ namespace ProjectREngine
 
         public bool canOpenDoors;
 
+        public int str, def, dex, hp, maxHp, speed, energy;
+        protected const int ENERGY_THRESHOLD = 100;
+
+        public Faction faction;
+
         protected Actor(DrawTag drawTag, string name) : base(drawTag, name)
         {
             nextAction = null;
-
             canOpenDoors = false;
+            energy = 0;
         }
 
         public virtual Action getNextAction(ref ActionResult result)
@@ -26,10 +31,20 @@ namespace ProjectREngine
                 return null;
             }
 
-            result = ActionResult.FetchedAction;
-            Action action = nextAction;
-            nextAction = null;
-            return action;
+            energy += speed;
+            if (energy < ENERGY_THRESHOLD)
+            {
+                result = ActionResult.Wait;
+                return null;
+            }
+            else
+            {
+                energy -= ENERGY_THRESHOLD;
+                result = ActionResult.FetchedAction;
+                Action action = nextAction;
+                nextAction = null;
+                return action;
+            }
         }
 
         public void setNextAction(Action action)
@@ -45,5 +60,10 @@ namespace ProjectREngine
     public enum ActionResult
     {
         Error, Wait, FetchedAction, PlayerWait, DoNothing
+    }
+
+    public enum Faction
+    {
+        Good, Evil
     }
 }

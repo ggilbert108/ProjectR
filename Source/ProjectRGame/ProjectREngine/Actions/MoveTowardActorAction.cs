@@ -16,8 +16,12 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
-            alternate = new AttackAction(_toward);
-            return false;
+            if (actor.faction != _toward.faction)
+            {
+                alternate = new AttackAction(_toward);
+                return false;
+            }
+            return true;
         }
     }
 }

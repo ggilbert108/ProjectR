@@ -62,7 +62,7 @@ namespace ProjectREngine
             ActionResult result = ActionResult.FetchedAction;
             Action action = actor.getNextAction(ref result);
 
-            if (result == ActionResult.DoNothing)
+            if (result == ActionResult.Error || result == ActionResult.Wait)
             {
                 curActor = (curActor + 1)%_actors.Count;
                 return false;
@@ -86,9 +86,11 @@ namespace ProjectREngine
                     action.bindLevel(this);
                     success = action.doAction();
                 }
+
+                curActor = (curActor + 1) % _actors.Count;
+
             }
 
-            curActor = (curActor + 1)%_actors.Count;
 
             if (hero.justMoved)
             {

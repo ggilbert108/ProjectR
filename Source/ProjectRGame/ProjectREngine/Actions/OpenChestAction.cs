@@ -16,7 +16,6 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
-            Console.WriteLine("opening chest");
             if (_chest.closed)
             {
                 _chest.closed = false;

@@ -11,7 +11,7 @@ namespace ProjectREngine
         Tile_Ground_1,
         Tile_Ground_2,
         Hero,
-        Monster,
+        Skeleton,
         Explosion_1,
         Explosion_2,
         Explosion_3,

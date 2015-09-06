@@ -24,6 +24,8 @@ namespace ProjectREngine
             inventory = new List<Item>();
 
             visibleRect = new Rect(0, 0, 0, 0);
+
+            faction = Faction.Good;
         }
 
         public void giveItem(Item item)
@@ -40,6 +42,7 @@ namespace ProjectREngine
             }
             else
             {
+                energy = ENERGY_THRESHOLD;
                 return base.getNextAction(ref result);
             }
         }
