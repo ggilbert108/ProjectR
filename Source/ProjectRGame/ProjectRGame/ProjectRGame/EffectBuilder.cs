@@ -29,9 +29,6 @@ namespace ProjectRGame
             location.x *= LevelView.TILE_SIZE;
             location.y *= LevelView.TILE_SIZE;
 
-            location.x += LevelView.TILE_SIZE/2;
-            location.y -= LevelView.TILE_SIZE/2;
-
 
             Explosion explosion = new Explosion(location);
             return explosion;

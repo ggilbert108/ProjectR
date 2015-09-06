@@ -16,13 +16,13 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
-            if (_door.closed)
+            if (_door.closed && actor.canOpenDoors)
             {
                 _door.closed = false;
                 MessageLog.log("Door opened");
                 level.updatePlayerVision();
             }
-            else
+            else if(!_door.closed)
             {
                 Location newLocation = _door.location;
                 actor.location = newLocation;

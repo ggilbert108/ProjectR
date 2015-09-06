@@ -26,6 +26,14 @@ namespace ProjectREngine.Actions
                 return false;
             }
 
+            Actor actorAtLocation = level.getActor(newLocation);
+            if (actorAtLocation != null)
+            {
+                alternate = new MoveTowardActorAction(actorAtLocation);
+                return false;
+            }
+
+
             Entity walkableAtLocation = level.getWalkable(newLocation);
             if (walkableAtLocation is Door)
             {
@@ -48,14 +56,6 @@ namespace ProjectREngine.Actions
                 }
             }
 
-            //TODO decouple actions
-
-            Actor actorAtLocation = level.getActor(newLocation);
-            if (actorAtLocation != null)
-            {
-                alternate = new MoveTowardActorAction(actorAtLocation);
-                return false;
-            }
 
             actor.location = newLocation;
 

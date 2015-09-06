@@ -18,12 +18,12 @@ namespace ProjectRGame
             _hero = hero;
         }
 
-        public void draw(SpriteBatch spriteBatch, SpriteFont font, int screenWidth, int screenHeight)
+        public void draw(SpriteBatch spriteBatch, int screenWidth, int screenHeight)
         {
-            drawMsgLog(spriteBatch, font ,screenWidth, screenHeight);
+            drawMsgLog(spriteBatch, screenWidth, screenHeight);
         }
 
-        private void drawMsgLog(SpriteBatch spriteBatch, SpriteFont font, int screenWidth, int screenHeight)
+        private void drawMsgLog(SpriteBatch spriteBatch, int screenWidth, int screenHeight)
         {
             const int messageDeltaY = 10;
             const int messageLogHeight = messageDeltaY * 4; //always set to the number of messages + 1
@@ -38,7 +38,7 @@ namespace ProjectRGame
             {
                 if (message != null)
                 {
-                    spriteBatch.DrawString(font, message, new Vector2(x, y), Color.Black);
+                    spriteBatch.DrawString(Game1.smallFont, message, new Vector2(x, y), Color.Black);
                 }
                 y += messageDeltaY;
             }

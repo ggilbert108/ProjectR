@@ -15,16 +15,17 @@ namespace ProjectREngine
         private List<Actor> _actors;
         private Dictionary<Location, Item> _items; 
         private Dictionary<Location, Entity> _walkables;
+        private Hero _hero;
 
         private HashSet<Location> _actorLocations; 
         private Location _entrance;
         private Location _exit;
         private Rect _bounds;
 
+        public bool gameOver;
+
         private int curActor;
-
-        private Hero _hero;
-
+        
         private LinkedList<EffectDescription> _effectQueue;
 
         public Level(Hero hero)
@@ -58,6 +59,20 @@ namespace ProjectREngine
         public bool update()
         {
             Actor actor = _actors[curActor];
+
+            if (actor.hp <= 0)
+            {
+                if (actor is Hero)
+                {
+                    gameOver = true;
+                }
+                else
+                {
+                    //actor is dead, and should be removed
+                    _actors.Remove(actor);
+                    return false;
+                }
+            }
 
             ActionResult result = ActionResult.FetchedAction;
             Action action = actor.getNextAction(ref result);

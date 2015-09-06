@@ -25,6 +25,13 @@ namespace ProjectREngine
 
             visibleRect = new Rect(0, 0, 0, 0);
 
+            str = 30;
+            def = 10;
+            dex = 10;
+            speed = 100;
+            hp = 200;
+            maxHp = hp;
+
             faction = Faction.Good;
         }
 

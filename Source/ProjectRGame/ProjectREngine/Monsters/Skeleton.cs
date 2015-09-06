@@ -9,7 +9,12 @@ namespace ProjectREngine.Monsters
     {
         public Skeleton() : base(DrawTag.Skeleton, "Skeleton")
         {
-
+            str = 10;
+            def = 10;
+            dex = 10;
+            speed = 80;
+            hp = 100;
+            maxHp = hp;
         }
     }
 }

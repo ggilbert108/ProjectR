@@ -16,21 +16,30 @@ namespace ProjectREngine.Actions
 
         public override bool doAction()
         {
-            if (_chest.closed)
+            if (actor.canOpenDoors)
             {
-                _chest.closed = false;
-                if (_chest.isTrapped)
+                if (_chest.closed)
                 {
-                    EffectDescription description = new EffectDescription(EffectType.Explosion, actor.location);
-                    level.queueEffect(description);
+                    _chest.closed = false;
+                    if (_chest.isTrapped)
+                    {
+                        EffectDescription description = new EffectDescription(EffectType.Explosion, actor.location);
+                        level.queueEffect(description);
 
-                    MessageLog.log("The chest was trapped!");
-                }
-                else
-                {
-                    Item chestItem = _chest.takeItem();
-                    ((Hero) actor).giveItem(chestItem);
-                    MessageLog.log(actor.name + " opened a chest and recieved " + chestItem.name);
+                        const int chestTrapMaxDamage = 10;
+
+                        int damage = Util.random.Next(1, chestTrapMaxDamage);
+                        actor.hp -= damage;
+
+                        MessageLog.log("The chest was trapped! " + actor.name +
+                            " hit for " + damage + " damage");
+                    }
+                    else
+                    {
+                        Item chestItem = _chest.takeItem();
+                        ((Hero) actor).giveItem(chestItem);
+                        MessageLog.log(actor.name + " opened a chest and recieved " + chestItem.name);
+                    }
                 }
             }
             return true;

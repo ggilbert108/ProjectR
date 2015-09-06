@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectREngine;
@@ -89,13 +90,20 @@ namespace ProjectRGame
             }
         }
 
-        public void draw(SpriteBatch spriteBatch, Texture2D atlas, SpriteFont font, int screenWidth, int screenHeight)
+        public void draw(SpriteBatch spriteBatch, Texture2D atlas, int screenWidth, int screenHeight)
         {
-            _levelView.draw(spriteBatch, atlas, screenWidth, screenHeight);
+            if (_level.gameOver)
+            {
+                spriteBatch.DrawString(Game1.bigFont, "GAME OVER", new Vector2(50, 50), Color.Red);
+            }
+            else
+            {
+                _levelView.draw(spriteBatch, atlas, screenWidth, screenHeight);
 
-            _effectView.draw(spriteBatch, atlas, screenWidth, screenHeight);
+                _effectView.draw(spriteBatch, atlas, screenWidth, screenHeight);
 
-            _hud.draw(spriteBatch, font, screenWidth, screenHeight);
+                _hud.draw(spriteBatch, screenWidth, screenHeight);
+            }
         }
     }
 }

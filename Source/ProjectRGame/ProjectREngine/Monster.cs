@@ -10,13 +10,6 @@ namespace ProjectREngine
     {
         protected Monster(DrawTag drawTag, string name) : base(drawTag, name)
         {
-            str = 10;
-            def = 10;
-            dex = 10;
-            speed = 80;
-            hp = 100;
-            maxHp = hp;
-
             faction = Faction.Evil;
         }
 
