@@ -41,8 +41,10 @@
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="Actions\MoveRandomlyAction.cs" />
+    <Compile Include="Actions\MoveTowardHeroAction.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="Actions\AttackAction.cs" />
+    <Compile Include="AStarSearch.cs" />
     <Compile Include="Chest.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="DrawTag.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="Hero.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Items\StrengthPotion.cs" />
+    <Compile Include="Lerp.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="MessageLog.cs" />

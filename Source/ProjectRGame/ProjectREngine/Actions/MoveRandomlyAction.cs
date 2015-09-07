@@ -27,8 +27,31 @@ namespace ProjectREngine.Actions
                 }
             }
 
+            if (actor is Monster)
+            {
+                checkCanSeePlayer();
+            }
+
+
             alternate = new MoveAction(direction);
             return false;
+        }
+
+        private void checkCanSeePlayer()
+        {
+            if (((Monster) actor).canSeePlayer)
+                return;
+
+            List<Location> lerp = Lerp.lerp(actor.location, level.getHeroLocation());
+            foreach (Location location in lerp)
+            {
+                if (level.blocksSight(location))
+                    return;
+            }
+
+            MessageLog.log("A " + actor.name + " sighted the hero");
+
+            ((Monster) actor).canSeePlayer = true;
         }
     }
 }

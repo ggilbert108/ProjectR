@@ -17,7 +17,7 @@ namespace ProjectREngine
             _closed = true;
 
 
-            if (Util.random.NextDouble() < 20)
+            if (Util.random.NextDouble() < 0.2)
             {
                 isTrapped = true;
             }

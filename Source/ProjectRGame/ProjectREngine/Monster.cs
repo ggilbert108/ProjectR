@@ -8,8 +8,11 @@ namespace ProjectREngine
 {
     public abstract class Monster : Actor
     {
+        private bool _canSeePlayer;
+
         protected Monster(DrawTag drawTag, string name) : base(drawTag, name)
         {
+            _canSeePlayer = false;
             faction = Faction.Evil;
         }
 
@@ -17,9 +20,22 @@ namespace ProjectREngine
         {
             if (nextAction == null)
             {
-                setNextAction(new MoveRandomlyAction());
+                if (_canSeePlayer)
+                {
+                    setNextAction(new MoveTowardHeroAction());
+                }
+                else
+                {
+                    setNextAction(new MoveRandomlyAction());
+                }
             }
             return base.getNextAction(ref result);
+        }
+
+        public bool canSeePlayer
+        {
+            get { return _canSeePlayer; }
+            set { _canSeePlayer = value; }
         }
     }
 }

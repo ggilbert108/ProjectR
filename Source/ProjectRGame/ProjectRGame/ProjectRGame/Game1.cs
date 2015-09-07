@@ -29,6 +29,7 @@ namespace ProjectRGame
         public static SpriteFont smallFont;
         public static SpriteFont bigFont;
         public static Texture2D alphaOverlay;
+        public static Texture2D blankTexture;
         public static Texture2D hudBox;
 
         public Game1()
@@ -69,9 +70,11 @@ namespace ProjectRGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _atlas = Content.Load<Texture2D>("tileset");
+
+
             smallFont = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("bigfont");
-
+            blankTexture = Content.Load<Texture2D>("blank");
             alphaOverlay = Content.Load<Texture2D>("blacksquare");
             hudBox = Content.Load<Texture2D>("paper");
             // TODO: use this.Content to load your game content here

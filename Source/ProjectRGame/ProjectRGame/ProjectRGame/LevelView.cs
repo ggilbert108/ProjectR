@@ -28,7 +28,7 @@ namespace ProjectRGame
                 {DrawTag.Tile_Ground_1, new Rectangle(32 * 0, 32 * 13, 32, 32)},
                 {DrawTag.Tile_Ground_2, new Rectangle(32 * 1, 32 * 13, 32, 32)},
                 {DrawTag.Hero, new Rectangle(32 * 20, 32 * 1, 32, 32)},
-                {DrawTag.Skeleton, new Rectangle(32 * 17, 32 * 8, 32, 32)},
+                {DrawTag.Skeleton, new Rectangle(32 * 21, 32 * 8, 32, 32)},
                 {DrawTag.Explosion_1, new Rectangle(32 * 20, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_2, new Rectangle(32 * 21, 32 * 10, 32, 32)},
                 {DrawTag.Explosion_3, new Rectangle(32 * 22, 32 * 10, 32, 32)},
@@ -45,8 +45,8 @@ namespace ProjectRGame
                 {DrawTag.Dungeon_Wall_6, new Rectangle(32 * 21, 32 * 16, 32, 32)},
                 {DrawTag.Dungeon_Wall_7, new Rectangle(32 * 22, 32 * 16, 32, 32)},
                 {DrawTag.Dungeon_Floor_1, new Rectangle(32 * 41, 32 * 12, 32, 32)},
-                {DrawTag.Stair_Up, new Rectangle(32 * 5, 32 * 45, 32, 32)},
-                {DrawTag.Stair_Down, new Rectangle(32 * 4, 32 * 45, 32, 32)},
+                {DrawTag.Stair_Up, new Rectangle(32 * 42, 32 * 15, 32, 32)},
+                {DrawTag.Stair_Down, new Rectangle(32 * 41, 32 * 15, 32, 32)},
             };
         }
 
@@ -94,7 +94,6 @@ namespace ProjectRGame
         {
             if (!entity.discovered) return;
 
-
             Rectangle source = imagePositions[entity.drawTag];
             Rectangle dest = new Rectangle(screenLocation.x * TILE_SIZE, screenLocation.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
@@ -104,6 +103,26 @@ namespace ProjectRGame
             Color color = new Color(0, 0, 0, alpha);
 
             spriteBatch.Draw(Game1.alphaOverlay, dest, color);
+
+            if (entity is Actor)
+            {
+                drawHealthBar(spriteBatch, (Actor)entity, dest);
+            }
+        }
+
+        private void drawHealthBar(SpriteBatch spriteBatch, Actor actor, Rectangle destRect)
+        {
+            const int hpBarHeight = 3;
+
+            destRect.Y = destRect.Bottom - hpBarHeight;
+            destRect.Height = hpBarHeight;
+
+            spriteBatch.Draw(Game1.blankTexture, destRect, Color.Gray);
+
+            double ratio = 1.0 *actor.hp/actor.maxHp;
+            destRect.Width = (int)(destRect.Width *ratio);
+
+            spriteBatch.Draw(Game1.blankTexture, destRect, Color.Green);
         }
     }
 }
