@@ -9,7 +9,7 @@ namespace ProjectRGame.Effects
 {
     internal class Explosion : Effect
     {
-        private readonly DrawTag[] _sprites = {DrawTag.Explosion_1, DrawTag.Explosion_2, DrawTag.Explosion_3};
+        private readonly DrawTag[] _sprites = {DrawTag.Explosion_1, DrawTag.Explosion_2, DrawTag.Explosion_3, DrawTag.Explosion_2, DrawTag.Explosion_1};
         private int _curSprite;
 
         public Explosion(Location coord) : base(50, DrawTag.Explosion_1, coord)

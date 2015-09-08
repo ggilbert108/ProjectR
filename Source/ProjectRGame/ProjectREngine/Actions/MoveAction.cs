@@ -45,6 +45,11 @@ namespace ProjectREngine.Actions
                 alternate = new OpenChestAction((Chest)walkableAtLocation);
                 return false;
             }
+            if (walkableAtLocation is Staircase)
+            {
+                alternate = new ChangeLevelAction(((Staircase) walkableAtLocation).goesUp);
+                return false;
+            }
 
             if (actor is Hero)
             {

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectREngine;
 using ProjectREngine.Actions;
+using LevelChange = ProjectREngine.LevelChange;
 
 namespace ProjectRGame
 {
@@ -28,12 +29,12 @@ namespace ProjectRGame
         {
             _hero = new Hero();
 
-            _level = new Level(_hero);
+            _level = new Level(_hero, true);
             _levelView = new LevelView(_level);
             _hud = new Hud(_hero);
 
             DungeonGenerator.generateDungeon(_level, 200, 200);
-            _level.setHeroInLevel();
+            _level.setHeroInLevel(false);
 
             _effectView = new EffectView();
 
@@ -47,6 +48,24 @@ namespace ProjectRGame
         /// <returns>Returns true if the game should cease it's update loop</returns>
         public bool update(KeyboardState keyState)
         {
+            if (_level.levelChange != LevelChange.None)
+            {
+                if (_level.levelChange == LevelChange.Down)
+                {
+                    _level.levelChange = LevelChange.None;
+                    _level = _level.downLevel;
+                    _level.setHeroInLevel(false);
+                }
+                else
+                {
+                    _level.levelChange = LevelChange.None;
+                    _level = _level.upLevel;
+                    _level.setHeroInLevel(true);
+                }
+                _levelView = new LevelView(_level);
+                return true;
+            }
+
             EffectDescription? effectDescription = _level.getEffect();
             if (effectDescription != null)
             {
@@ -60,10 +79,7 @@ namespace ProjectRGame
                 processInput(keyState);
                 return _level.update();
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
 
         private void processInput(KeyboardState state)

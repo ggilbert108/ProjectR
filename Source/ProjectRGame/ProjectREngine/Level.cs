@@ -18,17 +18,20 @@ namespace ProjectREngine
         private Hero _hero;
 
         private HashSet<Location> _actorLocations; 
-        private Location _entrance;
-        private Location _exit;
+        private Location _upStairs;
+        private Location _downStairs;
         private Rect _bounds;
 
         public bool gameOver;
-
         private int curActor;
-        
         private LinkedList<EffectDescription> _effectQueue;
 
-        public Level(Hero hero)
+        public Level upLevel;
+        public Level downLevel;
+        public LevelChange levelChange;
+        private bool _isTopLevel;
+
+        public Level(Hero hero, bool isTopLevel)
         {
             _tiles = new Dictionary<Location, Tile>();
             _actors = new List<Actor>();
@@ -37,18 +40,21 @@ namespace ProjectREngine
             _effectQueue = new LinkedList<EffectDescription>();
 
             _actorLocations = new HashSet<Location>();
-
             curActor = 0;
 
-            //TEST CODE
+            upLevel = null;
+            downLevel = null;
+            levelChange = LevelChange.None;
+
+            _isTopLevel = isTopLevel;
+
             _hero = hero;
-            
-            //END TEST CODE
         }
 
-        public void setHeroInLevel()
+        public void setHeroInLevel(bool wentUp)
         {
-            addActor(_hero, entrance);
+            Location loc = (wentUp) ? downStairs : upStairs;
+            addActor(_hero, loc);
             updatePlayerVision();
         }
 
@@ -289,16 +295,29 @@ namespace ProjectREngine
             _actors.Add( actor);
         }
 
-        public Location entrance
+        public void changeLevel(LevelChange change)
         {
-            get { return _entrance; }
-            set { _entrance = value; }
+            if (change == LevelChange.Up && _isTopLevel) return;
+            levelChange = change;
+
+            if (levelChange == LevelChange.Down && downLevel == null)
+            {
+                downLevel = new Level(_hero, false);
+                DungeonGenerator.generateDungeon(downLevel, 200, 200);
+                downLevel.upLevel = this;
+            }
         }
 
-        public Location exit
+        public Location upStairs
         {
-            get { return _exit; }
-            set { _exit = value; }
+            get { return _upStairs; }
+            set { _upStairs = value; }
+        }
+
+        public Location downStairs
+        {
+            get { return _downStairs; }
+            set { _downStairs = value; }
         }
 
         public Rect bounds
@@ -306,5 +325,10 @@ namespace ProjectREngine
             get { return _bounds; }
             set { _bounds = value; }
         }
+    }
+
+    public enum LevelChange
+    {
+        None, Up, Down
     }
 }

@@ -21,6 +21,8 @@ namespace ProjectREngine
             Rect innerRoom = createRect(center, Direction.West, Feature.Room);
             carveRoom(level, innerRoom, false, TileType.Dungeon_Floor);
 
+
+
             for (int i = 0; i < 100; i++)
             {
                 Location doorLoc = findDoor(level, dungeonRect);
@@ -167,29 +169,39 @@ namespace ProjectREngine
 
         private static void addEntranceAndExit(Level level, Rect dungeon)
         {
-            //for now we set the name of the entrance tile to "entrance"
-            //TODO actually use staircases
-            Location entrance = new Location(0, 0);
+            Location loc = new Location(0, 0);
 
-            while (level.getTile(entrance).blocksMovement)
+            while (!isStairCandidate(level, loc))
             {
-                entrance.x = Util.random.Next(dungeon.x1, dungeon.x2);
-                entrance.y = Util.random.Next(dungeon.y1, dungeon.y2);
+                loc.x = Util.random.Next(dungeon.x1, dungeon.x2);
+                loc.y = Util.random.Next(dungeon.y1, dungeon.y2);
             }
 
-            Staircase staircase = new Staircase(true);
-            level.addWalkable(staircase, entrance);
-            level.entrance = entrance;
+            Staircase upcase = new Staircase(true);
+            level.addWalkable(upcase, loc);
+            level.upStairs = loc;
+
+            loc = new Location(0, 0);
+
+            while (!isStairCandidate(level, loc))
+            {
+                loc.x = Util.random.Next(dungeon.x1, dungeon.x2);
+                loc.y = Util.random.Next(dungeon.y1, dungeon.y2);
+            }
+
+            Staircase downcase = new Staircase(false);
+            level.addWalkable(downcase, loc);
+            level.downStairs = loc;
         }
 
         private static void addChests(Level level, Rect bounds)
         {
-            const int numChests = 20;
+            const int numChests = 5;
             for (int i = 0; i < numChests; i++)
             {
                 Location chestLoc = new Location(0, 0);
 
-                while (level.getTile(chestLoc).blocksMovement)
+                while (!isChestCandidate(level, chestLoc))
                 {
                     chestLoc.x = Util.random.Next(bounds.x1, bounds.x2);
                     chestLoc.y = Util.random.Next(bounds.y1, bounds.y2);
@@ -197,15 +209,14 @@ namespace ProjectREngine
 
                 Chest chest = new Chest();
                 level.addWalkable(chest, chestLoc);
-
             }
         }
 
         private static void addMonsters(Level level, Rect bounds)
         {
-            const int numMonsters = 20;
+            List<Monster> monsters = MonsterFactory.getDungeonMonsters(1);
 
-            for (int i = 0; i < numMonsters; i++)
+            for (int i = 0; i < monsters.Count; i++)
             {
                 Location monsterLocation = new Location(0, 0);
 
@@ -215,9 +226,16 @@ namespace ProjectREngine
                     monsterLocation.y = Util.random.Next(bounds.y1, bounds.y2);
                 }
 
-                Monster monster = new Skeleton();
-                level.addActor(monster, monsterLocation);
+                level.addActor(monsters[i], monsterLocation);
             }
+        }
+
+        private static bool isStairCandidate(Level level, Location location)
+        {
+            if (!isChestCandidate(level, location)) return false;
+
+            Entity interactable = level.getWalkable(location);
+            return interactable == null;
         }
 
         private static bool isMonsterCandidate(Level level, Location location)
@@ -247,6 +265,30 @@ namespace ProjectREngine
                     return true;
             }
             return false;
+        }
+
+        private static bool isChestCandidate(Level level, Location location)
+        {
+            if (level.getTile(location).blocksMovement)
+                return false;
+
+            Direction[] directions = {Direction.North, Direction.South, Direction.West, Direction.East};
+            bool[] blocked = new bool[4];
+
+            for (int i = 0; i < directions.Length; i++)
+            {
+                Location adj = location.getAdjLocation(directions[i]);
+                if (level.getWalkable(adj) is Door)
+                    return false;
+
+                Tile tile = level.getTile(adj);
+                if (tile != null && tile.blocksMovement)
+                {
+                    blocked[i] = true;
+                }
+            }
+
+            return !((blocked[0] && blocked[1]) || (blocked[2] && blocked[3]));
         }
 
         private static void initLighting(Level level,  Rect bounds)
