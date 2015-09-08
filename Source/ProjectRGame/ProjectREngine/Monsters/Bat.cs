@@ -9,7 +9,7 @@ namespace ProjectREngine.Monsters
     {
         public Bat() : base(DrawTag.Bat, "Bat")
         {
-            str = 5;
+            str = 15;
             def = 5;
             dex = 15;
             speed = 100;

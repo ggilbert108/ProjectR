@@ -55,6 +55,16 @@ namespace ProjectREngine
                 nextAction = action;
             }
         }
+
+        public int healthRegen
+        {
+            get
+            {
+                double percent = def/5.0;
+                percent /= 100.0;
+                return (int) (percent*maxHp);
+            }
+        }
     }
 
     public enum ActionResult

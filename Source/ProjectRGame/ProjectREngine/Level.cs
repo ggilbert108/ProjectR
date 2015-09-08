@@ -108,6 +108,13 @@ namespace ProjectREngine
                     success = action.doAction();
                 }
 
+                //regenerate health for actor
+                actor.hp += actor.healthRegen;
+                Console.WriteLine(actor.healthRegen);
+                if (actor.hp > actor.maxHp)
+                    actor.hp = actor.maxHp;
+
+
                 curActor = (curActor + 1) % _actors.Count;
 
             }
