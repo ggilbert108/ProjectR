@@ -20,25 +20,24 @@ namespace ProjectRGame
 
         public void draw(SpriteBatch spriteBatch, int screenWidth, int screenHeight)
         {
+            Rectangle screen = new Rectangle(0, 0, screenWidth, screenHeight);
+            spriteBatch.Draw(Game1.hud, screen, Color.White);
             drawMsgLog(spriteBatch, screenWidth, screenHeight);
         }
 
         private void drawMsgLog(SpriteBatch spriteBatch, int screenWidth, int screenHeight)
         {
             const int messageDeltaY = 10;
-            const int messageLogHeight = messageDeltaY * 4; //always set to the number of messages + 1
+            const int messageLogHeight = messageDeltaY * 9; //always set to the number of messages + 1
 
-            const int x = 10;
+            const int x = 2;
             int y = screenHeight - messageLogHeight;
-
-            Rectangle msgLogBounds = new Rectangle(0, y, screenWidth, messageLogHeight);
-            spriteBatch.Draw(Game1.hudBox, msgLogBounds, Color.White);
 
             foreach (string message in MessageLog.messages)
             {
                 if (message != null)
                 {
-                    spriteBatch.DrawString(Game1.smallFont, message, new Vector2(x, y), Color.Black);
+                    spriteBatch.DrawString(Game1.smallFont, message, new Vector2(x, y), Color.White);
                 }
                 y += messageDeltaY;
             }

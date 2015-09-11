@@ -56,6 +56,17 @@ namespace ProjectREngine
             }
         }
 
+        public void regenHp()
+        {
+            if (hp > 0)
+            {
+                hp += healthRegen;
+                if (hp > maxHp)
+                    hp = maxHp;
+            }
+
+        }
+
         public int healthRegen
         {
             get

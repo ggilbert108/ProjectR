@@ -30,7 +30,7 @@ namespace ProjectRGame
         public static SpriteFont bigFont;
         public static Texture2D alphaOverlay;
         public static Texture2D blankTexture;
-        public static Texture2D hudBox;
+        public static Texture2D hud;
 
         public Game1()
         {
@@ -76,7 +76,7 @@ namespace ProjectRGame
             bigFont = Content.Load<SpriteFont>("bigfont");
             blankTexture = Content.Load<Texture2D>("blank");
             alphaOverlay = Content.Load<Texture2D>("blacksquare");
-            hudBox = Content.Load<Texture2D>("paper");
+            hud = Content.Load<Texture2D>("HUD");
             // TODO: use this.Content to load your game content here
         }
 
